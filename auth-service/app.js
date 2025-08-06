@@ -1,6 +1,6 @@
 //express app setup
-import expres from 'express';
-import authRoutes from '.routes/auth.routes.js';
+import express from 'express';
+import authRoutes from './routes/auth.routes.js';
 
 const app = express();
 

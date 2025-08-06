@@ -1,11 +1,18 @@
 import User from '../models/user.model.js';
 import generateToken from '../utils/generateToken.js';
+import bcrypt from 'bcryptjs';
 
-export const regitserUser = async(re, res) => {
-    const {username, email, password} = req.body;
+
+
+export const registerUser = async(req, res) => {
+
+    const {username, email, password} = req.body;   
+
+    console.log(req.body);
     
     try{
-    const userExists = await User.find({email});
+    const userExists = await User.findOne({email});
+    console.log('User exists:', userExists);
 
     if(userExists) {
         return res.status(400).json({message: 'User already exists'});
@@ -20,12 +27,16 @@ export const regitserUser = async(re, res) => {
         password: hashedPassword
     })
 
+    console.log('New user:', newUser);
+
+    await newUser.save();
     res.status(201).json({
         _id: newUser._id,
         username: newUser.username,
         email: newUser.email,
     });
     }catch(error) {
+        console.error('Error during registration:', error);
         return res.status(500).json({message: 'Server error'});
     }
     
@@ -34,9 +45,12 @@ export const regitserUser = async(re, res) => {
 export const loginUser = async(req, res) => {
     const {email, password} = req.body;
 
+    console.log('Login payload:', req.body);
+
    try {
         const user = await User.findOne({email });
-
+        console.log('Found user:', user);
+    
     if(!user) {
         return res.status(400).json({message: 'Invalid email or password'});
     }
@@ -58,7 +72,8 @@ export const loginUser = async(req, res) => {
         }
     });
    }catch(error) {
-        return res.status(500).json({message: 'Server error'});
+        console.error('Error during login:', error);
+        
     }
     
 }
