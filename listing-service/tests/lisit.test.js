@@ -49,13 +49,16 @@ describe('Listing API', () => {
         expect(res.body.listing).toHaveProperty('_id');
     });
 
-    it('should get a listing by id', async () => {
+    it('should get all listing', async () => {
         console.log('Created listing ID:', created_list);
         const res = await request(app)
-            .get(`/api/listings/${created_list}`);
+            .get('/api/listings/');
         
         expect(res.statusCode).toEqual(200);
-        expect(res.body).toHaveProperty('listing');
+        expect(Array.isArray(res.body)).toBe(true);
+        expect(res.body.length).toBeGreaterThan(0);
+        expect(res.body[0]).toHaveProperty('_id');
+        expect(res.body[0]).toHaveProperty('title');
     });
 
     it('should get filtered listings', async () => {
