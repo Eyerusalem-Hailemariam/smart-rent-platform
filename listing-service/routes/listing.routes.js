@@ -1,11 +1,11 @@
 const express = require('express');
-const {createListing, getListings, updateListing, deleteListing} = require('../controllers/listing.controller.js');
+const {create, getListings, updateListing, deleteListing} = require('../controllers/listing.controller.js');
 const {storage} = require('../utils/cloudinary.js');
 const multer = require('multer');
 const router = express.Router();
 const upload = multer({ storage: storage });
 
-router.post('/', createListing);
+router.post('/', create);
 router.get('/', getListings);
 router.put('/:id', updateListing);
 router.delete('/:id', deleteListing);

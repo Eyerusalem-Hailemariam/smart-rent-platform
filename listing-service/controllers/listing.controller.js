@@ -1,9 +1,9 @@
 const Listing = require('../models/listing.model.js');
 
-const create = async(requestAnimationFrame, res) => {
+const create = async(req, res) => {
     try{
 
-        const {title, description, price, location, image, ownerId} = requestAnimationFrame.body;
+        const {title,type, description, price, location, image, ownerId} = req.body;
         const listing = new Listing({
             title, type, description, price, location, image, ownerId
         });
@@ -16,10 +16,11 @@ const create = async(requestAnimationFrame, res) => {
     }
 }
 
-const getLisitings = async(req, res) => {
+const getListings = async(req, res) => {
     try {
         const  {type, location, minprice, maxprice} = req.query;
         const filter = {};
+        console.log('Fetching listings with filters:', req.query);
 
         if(type){
             filter.type = type;
@@ -33,11 +34,11 @@ const getLisitings = async(req, res) => {
                 filter.price.$gte = minprice;
             }
             if(maxprice) {
-                    filter.price.$lte = maxPrice;
-                }
+                filter.price.$lte = maxprice;
             }
-        
-        const  listing = await Listing.find(filter);
+        }
+
+        const  listing = await Listing.find(filter).lean();
         res.status(200).json(listing);
     } catch(error) {
         console.error('Error fetching listings:', error);
@@ -78,7 +79,7 @@ const deleteListing = async(req, res) => {
         if(listing.ownerId.toString() !== req.body.ownerId){
             return res.status(403).json({message: 'Forbidden'});
         }
-        await listing.remove();
+        await listing.deleteOne();
         res.status(200).json({message: 'Listing deleted successfully'});
     }catch(error){
         console.error('Error deleting listing:', error);
@@ -88,7 +89,7 @@ const deleteListing = async(req, res) => {
 
 module.exports = {
     create,
-    getLisitings,
+    getListings,
     updateListing,
     deleteListing
 };

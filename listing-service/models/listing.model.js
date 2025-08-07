@@ -3,10 +3,14 @@ const mongoose = require('mongoose');
 const listingSchema = new mongoose.Schema({
     title: {
         type: String,
-        enum : ['home', 'car', 'truck'], 
-        required: [true, "Title is required"],
-        minlength: 2,
+        minlength: 3,
         maxlength: 100,
+        required: [true, "Title is required"],
+    },
+    type : {
+        type: String,
+        enum : ['home', 'car', 'truck'], 
+        required: [true, "type is required"],
     },
     description : {
         type: String,
