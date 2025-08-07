@@ -38,7 +38,7 @@ const getListings = async(req, res) => {
             }
         }
 
-        const  listing = await Listing.find(filter).lean();
+        const  listing = await Listing.find(filter);
         res.status(200).json(listing);
     } catch(error) {
         console.error('Error fetching listings:', error);
