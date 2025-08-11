@@ -1,33 +1,35 @@
-import {Button} from "@/components/ui/button"
-import { useState } from "react"
-import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export function HeaderLandingPage() {
     return(
-     <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
-                <div className="flex items-center">
-                    <Link href="/" className="text-2xl font-bold text-gray-900">
-                        Smart Rent
-                    </Link>
-                </div>
-                <div className="hidden md:flex space-x-4">
-                    <Link href="/about" className="text-gray-600 hover:text-gray-900">
-                        About   
-                    </Link>
-                    <Link href="/contact" className="text-gray-600 hover:text-gray-900">
-                        Contact
-                    </Link>
-                    <Link href="/login" className="text-gray-600 hover:text-gray-900">
-                        Login
-                    </Link>
-                    <Link href="/register" className="text-gray-600 hover:text-gray-900">
-                        Register
-                    </Link>
-                </div>
-            </div>
-        </div>
-    </header>
+        <header className="sticky top-0 z-50 bg-white shadow-md h-[200px] flex items-center">
+          <div className="max-w-7xl mx-auto w-full flex items-center justify-between p-4">
+
+       {/* logo */}
+          <div className="flex items-center gap-2">
+            <img src="/logo.png" alt="Logo" className="h-8" />
+            <span className="font-bold text-lg">SmartRentPlatform</span>
+          </div>
+          {/* searchbar */}
+          <div className="hidden md:flex items-center gap-2 border rounded-full px-3 py-1 shadow-sm">
+            <Input placeholder="Search Destinations" className="border-none focus-visible:ring-0 w-56" />
+            <Button className="rounded-full bg-red-500 hover:bg-red-600">Search</Button>
+          </div>
+
+          {/* Profile/Menu */}
+          <div className="flex items-center gap-4">
+          <span className="hidden md:inline font-medium cursor-pointer">
+            Become a host
+          </span>
+
+          <Avatar>
+            <AvatarImage src="https://github.com/shadcn.png"/>
+            <AvatarFallback>U</AvatarFallback>
+          </Avatar>
+          </div>
+          </div>
+        </header>
     );
 }
