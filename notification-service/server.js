@@ -37,7 +37,7 @@ async function start() {
   });
 
   io.adapter(createAdapter(pubClient, subClient));
-  console.log('✅ Socket.io Redis adapter attached');
+  console.log('Socket.io Redis adapter attached');
 
   // 4) Make io available to controllers
   setSocketInstance(io);

@@ -1,4 +1,3 @@
-//server.js
 const app  = require('./app.js');
 const mongoose = require('mongoose');
 require('dotenv').config(); 
